@@ -7,7 +7,6 @@
  *
  * Dependencies:
  * sylvester.js - https://github.com/jcoglan/sylvester
- * jquery.js - http://jquery.com
  * 
  * @author Flurry, Inc. 
  * Copyright 2012 Flurry, Inc. (http://flurry.com)
@@ -24,6 +23,7 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
+var Sylvester = require('sylvester');
 
 // Default degree for the model polynomials
 var DEFAULT_POLYNOMIAL_DEGREE = 2;
@@ -155,7 +155,7 @@ function generateInputMatrix(x, power)
 function matrixPower(matrix, power)
 {
 	
-	var result = Matrix.Zero(matrix.rows(), matrix.cols());
+	var result = Sylvester.Matrix.Zero(matrix.rows(), matrix.cols());
 	
 	for(row=1;row<=matrix.rows(); row++)
 	{
@@ -188,11 +188,17 @@ function ordinalize(dataSeries)
 	vectorArray['y'] = new Array();		// this will be the 'y' value of the input
 	vectorArray['label'] = new Array(); // this will be the 'x' value of the input
 	
-	$.each(dataSeries['x'], function(i, item) {
+	for(var i=0;i<dataSeries['x'].length; i++)
+	{
 		vectorArray['label'][i] = dataSeries['x'][i];
 		vectorArray['x'][i] = i; 		// use the ordinal value of x instead of the actual value
 		vectorArray['y'][i] = dataSeries['y'][i];
-	});
+	};
 	
 	return vectorArray;
 }
+
+// Export functions for Node.js module
+module.exports.buildModel = buildModel;
+module.exports.applyModel = applyModel;
+module.exports.ordinalize = ordinalize;
