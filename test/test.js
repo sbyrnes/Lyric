@@ -1,15 +1,54 @@
 /**
  * Tests for the Lyric.js linear regression library.
  */
-var sylvester = require('sylvester');
+var Sylvester = require('sylvester');
 var Lyric = require('../lyric.js');
 
-// Test something
+// Test that sylvester is integrated properly
 exports['test sylvester'] = function(beforeExit, assert){
-	var matrix = sylvester.Matrix.Zeros(3, 4);
+	var matrix = Sylvester.Matrix.Zeros(3, 4);
 	
     assert.equal(3, matrix.rows());
     assert.equal(4, matrix.cols());
+};
+
+// Test the generation of input matrices
+exports['test generateInputMatrix'] = function(beforeExit, assert){
+	// Try with zeros and a power of 2
+	var inputArray = [0, 0, 0, 0, 0];
+	var generatedMatrix = Lyric.generateInputMatrix(inputArray, 2);
+	var expectedMatrix = $M([[1, 1, 1, 1, 1],
+							 [0, 0, 0, 0, 0],
+							 [0, 0, 0, 0, 0]]);
+	assert.equal(true, expectedMatrix.eql(generatedMatrix));
+	
+	// Try with values and a power of 3
+	var inputArray = [1, 2, 3, 4, 5];
+	var generatedMatrix = Lyric.generateInputMatrix(inputArray, 3);
+	var expectedMatrix = $M([[1, 1, 1, 1, 1],
+							 [1, 2, 3, 4, 5],
+							 [1, 4, 9, 16, 25],
+							 [1, 8, 27, 64, 125]]);
+	assert.equal(true, expectedMatrix.eql(generatedMatrix));
+};
+
+// Test the raising of a matrix's elements to a given power
+exports['test matrixPower'] = function(beforeExit, assert){
+	// All zeros 
+	var inputMatrix = Sylvester.Matrix.Zeros(4,5);
+	var resultMatrix = Lyric.matrixPower(inputMatrix, 3);
+	var expectedMatrix = inputMatrix; // should be the same coming out as going in, no matter the power
+	assert.equal(true, expectedMatrix.eql(resultMatrix));
+	
+	// Try with a matrix of numbers
+	var inputMatrix = $M([[1, 2, 3, 4],
+						  [5, 6, 7, 8],
+						  [-1, -2, -3, -4]]);
+	var resultMatrix = Lyric.matrixPower(inputMatrix, 2);
+	var expectedMatrix = $M([[1, 4, 9, 16],
+						   [25, 36, 49, 64],
+						   [1, 4, 9, 16]]);
+	assert.equal(true, expectedMatrix.eql(resultMatrix));
 };
 
 // Test ordinalize
@@ -82,8 +121,6 @@ exports['test regression'] = function(beforeExit, assert){
 	estimationInput['x'][2] = 8;
 	
 	var estimateData = Lyric.applyModel(estimationInput, Lyric.buildModel(input));
-	
-	console.log(JSON.stringify(estimateData));
 	
 	assert.equal(6, estimateData[0]['x']);
 	assert.equal(7, estimateData[1]['x']);

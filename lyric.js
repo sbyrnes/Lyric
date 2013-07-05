@@ -115,8 +115,10 @@ function generateTheta(X, y)
  * O[2] = x^2  i.e. all elements of x squared
  * O[3] = x^3  i.e. all elements of x cubed
  * 
+ * NOTE: The smalled power accepted is 2. Values smaller than that will be ignored.
+ *
  * @param x An input array representing a vector of values
- * @param power The maximum power of the series to create
+ * @param power The maximum power of the series to create, must be at least 2.
  * @returns An array of size [x,power+1] 
  */
 function generateInputMatrix(x, power)
@@ -202,3 +204,5 @@ function ordinalize(dataSeries)
 module.exports.buildModel = buildModel;
 module.exports.applyModel = applyModel;
 module.exports.ordinalize = ordinalize;
+module.exports.matrixPower = matrixPower;
+module.exports.generateInputMatrix = generateInputMatrix;
