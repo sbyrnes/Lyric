@@ -1,5 +1,5 @@
 {
-  "name": "lyric",
+  "name": "lyric-node",
   "description": "Linear regression library for use in Node.js applications. Based on Lyric javascript library provided by Flurry (http://github.com/flurry)",
   "version": "0.0.1",
   "engines": {

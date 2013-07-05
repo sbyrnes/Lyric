@@ -1,7 +1,8 @@
-Lyric
+Lyric-Node
 =====
 
 Linear Regression library for use in Node.js applications to model and predict data series.
+Based on Lyric javascript library provided by Flurry (http://github.com/flurry)
 
 Description
 =====
@@ -19,13 +20,13 @@ https://github.com/NaturalNode/node-sylvester
 
 Installation
 =====
-    npm install lyric
+    npm install lyric-node
 
 Usage
 =====	
 First, make sure your data is represented in the form of a 2xN Array comprised of elements with an 'x' and 'y' value. The x value should be the explanatory and the y the dependent variables.
 <!-- language: lang-js -->
-	var Lyric = require('lyric');
+	var Lyric = require('lyric-node');
 	
 	var input = new Array();
 	input['x'] = new Array();	input['y'] = new Array();
@@ -45,7 +46,7 @@ Now that you have your model, you will likely want to apply it to a set of input
 
 The following is a complete example which, given some values for the explanatory values 1 through 5, estimates the values of 6 through 8:
 <!-- language: lang-js -->
-	var Lyric = require('lyric');
+	var Lyric = require('lyric-node');
 	
 	var input = new Array();
 	input['x'] = new Array();	input['y'] = new Array();
