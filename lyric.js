@@ -200,9 +200,39 @@ function ordinalize(dataSeries)
 	return vectorArray;
 }
 
+
+/** 
+ * Computes the error for a given model on the provided data series. The error is computed as the sum of the squared errors for each 
+ * input. 
+ * 
+ * @param dataSeries A two dimensional array of size 2xN containing the sub arrays data['x'][N] and data['y'][N]
+ * @param model The model computed using the buildModel() function.
+ * @returns error The mean squared error.
+ */
+function computeError(dataSeries, model, degree)
+{
+	// prepare result error object
+	var error = 0;
+	
+	var estimatedValues = applyModel(dataSeries, model, degree);
+	
+	// Calculate total squared error
+	var totalSquaredError = 0;
+	for(var i=0;i<dataSeries['x'].length; i++)
+	{	
+		totalSquaredError +=  Math.pow((dataSeries['y'][i] - estimatedValues[i]['y']), 2);
+	}
+	
+	// Divide by N to get the mean
+	error = totalSquaredError / dataSeries['x'].length;
+	
+	return error;
+}
+
 // Export functions for Node.js module
 module.exports.buildModel = buildModel;
 module.exports.applyModel = applyModel;
 module.exports.ordinalize = ordinalize;
 module.exports.matrixPower = matrixPower;
 module.exports.generateInputMatrix = generateInputMatrix;
+module.exports.computeError = computeError;

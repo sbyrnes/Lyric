@@ -130,3 +130,17 @@ exports['test regression'] = function(beforeExit, assert){
 	assert.equal(22, Math.round(estimateData[2]['y']));
 }
 
+// Test error calculation
+exports['test regression'] = function(beforeExit, assert){
+	var input = new Array();
+	input['x'] = new Array();	input['y'] = new Array();
+	input['x'][0] = 1;      	input['y'][0] = 0.5;
+	input['x'][1] = 2;      	input['y'][1] = 1.6;    
+	input['x'][2] = 3;      	input['y'][2] = 4.5;
+	input['x'][3] = 4;      	input['y'][3] = 7.6;
+	input['x'][4] = 5;      	input['y'][4] = 10.1;
+	
+	var error = Lyric.computeError(input, Lyric.buildModel(input));
+
+	assert.equal(0.117, error.toFixed(3));
+}

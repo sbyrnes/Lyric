@@ -74,6 +74,22 @@ For example, to model using a 4-th degree polynomial you would modify the above 
 <!-- language: lang-js -->
 	var estimateData = Lyric.applyModel(estimationInput, Lyric.buildModel(data, 4), 4);
 	
+Estimation Error
+=====	
+As with any model, it is important to know how accurate your model is on known data. Typically you would have a set of known values that you use to build the model (the training set) and a set of known values you use to test (the test set). 
+There is a convenience function provided to help you determine the Mean Squared Error (MSE) which is the sum of the squares of the differences between the known values and the estimated values from the model. You call it the same way that you call applyModel()
+
+<!-- language: lang-js -->
+	var error = Lyric.computeError(input, Lyric.buildModel(input));
+	
+	// error is a float value representing the MSE
+	
+Acceptable MSE will vary by application so it is up to you to determine whether the value is acceptable. 
+
+If you want to reduce the MSE you have two options:
+ * Increase the size of the training set.
+ * Change the polynomial degree used to fit the data.
+	
 Timeseries
 =====
 For timeseries data using regular intervals, it is typically more efficient to use the ordinality as the explanatory value than the timestamp. For example, given the following data series:
